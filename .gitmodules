@@ -1,3 +1,4 @@
 [submodule "desmume_src"]
-	path = desmume_src
-	url = https://github.com/SkyTemple/desmume.git
+    path = desmume_src
+    url = https://github.com/kenzlegouge/desmume.git
+    branch = speed-extensions
