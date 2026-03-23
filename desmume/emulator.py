@@ -1027,7 +1027,7 @@ class DeSmuME:
 
     	# --- Speed / headless mode additions ---
         self.lib.desmume_set_frameskip.restype = None
-        self.lib.desmume_set_frameskip.argtypes = [c_bool]
+        self.lib.desmume_set_frameskip.argtypes = [c_int]
 
         self.lib.desmume_set_sound_enabled.restype = None
         self.lib.desmume_set_sound_enabled.argtypes = [c_int]
