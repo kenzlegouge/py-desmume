@@ -1025,18 +1025,19 @@ class DeSmuME:
 
         self.lib.desmume_set_savetype(0)
 
-	# --- Speed / headless mode additions ---
-	self.lib.desmume_set_frameskip.restype = None
-	self.lib.desmume_set_frameskip.argtypes = [c_bool]
+    	# --- Speed / headless mode additions ---
+        self.lib.desmume_set_frameskip.restype = None
+        self.lib.desmume_set_frameskip.argtypes = [c_bool]
 
-	self.lib.desmume_set_sound_enabled.restype = None
-	self.lib.desmume_set_sound_enabled.argtypes = [c_int]
+        self.lib.desmume_set_sound_enabled.restype = None
+        self.lib.desmume_set_sound_enabled.argtypes = [c_int]
 
-	self.lib.desmume_set_3d_renderer.restype = None
-	self.lib.desmume_set_3d_renderer.argtypes = [c_int]
+        self.lib.desmume_set_3d_renderer.restype = None
+        self.lib.desmume_set_3d_renderer.argtypes = [c_int]
 
-	self.lib.desmume_set_jit_enabled.restype = None
-	self.lib.desmume_set_jit_enabled.argtypes = [c_int, c_int]
+        self.lib.desmume_set_jit_enabled.restype = None
+        self.lib.desmume_set_jit_enabled.argtypes = [c_int, c_int]
+
 
         if self.lib.desmume_init() < 0:
             raise RuntimeError("Failed to init DeSmuME")
@@ -1238,34 +1239,34 @@ class DeSmuME:
         self.lib.desmume_gpu_set_layer_sub_enable_state(layer_index, state)
 
     def set_frameskip(self, n: int):
-    """
-    	Set frameskip count.
-    	0 = render every frame (default).
-    	N = skip N frames, then render 1 full frame, repeat.
-    	Call cycle_frameskip() instead of cycle() when using this.
+        """
+        Set frameskip count.
+        0 = render every frame (default).
+        N = skip N frames, then render 1 full frame, repeat.
+        Call cycle_frameskip() instead of cycle() when using this.
     	"""
-    	self.lib.desmume_set_frameskip(n)
+        self.lib.desmume_set_frameskip(n)
 
     def cycle_frameskip(self, with_joystick: bool = False):
-    	"""Use instead of cycle() when frameskip > 0."""
-    	self.lib.desmume_cycle_with_frameskip(with_joystick)
+        """Use instead of cycle() when frameskip > 0."""
+        self.lib.desmume_cycle_with_frameskip(with_joystick)
 
     def set_sound_enabled(self, enabled: bool):
-    	"""Enable or disable sound emulation. Disabling saves significant CPU."""
-    	self.lib.desmume_set_sound_enabled(int(enabled))
+        """Enable or disable sound emulation. Disabling saves significant CPU."""
+        self.lib.desmume_set_sound_enabled(int(enabled))
 
     def set_3d_renderer(self, renderer: int):
+        """
+        Set 3D rendering engine.
+        0 = NULL (disabled, fastest — no 3D output at all)
+        1 = Software rasterizer (default, safe for framebuffer capture)
+        2 = OpenGL (do not use on headless VPS without a virtual display)
     	"""
-    	Set 3D rendering engine.
-    	0 = NULL (disabled, fastest — no 3D output at all)
-    	1 = Software rasterizer (default, safe for framebuffer capture)
-    	2 = OpenGL (do not use on headless VPS without a virtual display)
-    	"""
-    	self.lib.desmume_set_3d_renderer(renderer)
+        self.lib.desmume_set_3d_renderer(renderer)
 
     def set_jit_enabled(self, enabled: bool, block_size: int = 100):
-    	"""
-    	Enable JIT dynamic recompiler. block_size 1=accurate, 100=fastest.
-    	Only works if the library was compiled with -Denable_jit=true.
-    	"""
-    s	elf.lib.desmume_set_jit_enabled(int(enabled), block_size)
+        """
+        Enable JIT dynamic recompiler. block_size 1=accurate, 100=fastest.
+        Only works if the library was compiled with -Denable_jit=true.
+        """
+        self.lib.desmume_set_jit_enabled(int(enabled), block_size)
