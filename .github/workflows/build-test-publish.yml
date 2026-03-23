@@ -1,5 +1,5 @@
 # Builds on all branches & PRs
-# Deploys to PyPi on "release".
+# Deploys on "release".
 name: Build, test and publish
 
 on:
@@ -20,8 +20,6 @@ jobs:
         include:
           - os: ubuntu-latest
             arch: x86_64
-          - os: ubuntu-latest
-            arch: aarch64
           - os: macos-15-intel
             arch: x86_64
           - os: macos-14
@@ -170,27 +168,3 @@ jobs:
         with:
           name: mingw-wheels-msys2-py-${{ matrix.msystem }}
           path: dist/*.whl
-  deploy:
-    if: startsWith(github.ref, 'refs/tags/')
-    needs:
-      - build
-      - build-sdist
-    runs-on: ubuntu-latest
-    name: Deploy wheels to PyPI
-    steps:
-      - name: Download wheels
-        uses: actions/download-artifact@v4
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.12
-      - name: Upgrade pip
-        run: |
-          python -m pip install --upgrade pip
-          pip install twine
-      - name: Publish wheels to PyPI
-        env:
-          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        run: |
-          twine upload wheels*/*.whl wheels*/*.tar.gz
