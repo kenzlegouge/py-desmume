@@ -1038,6 +1038,9 @@ class DeSmuME:
         self.lib.desmume_set_jit_enabled.restype = None
         self.lib.desmume_set_jit_enabled.argtypes = [c_int, c_int]
 
+        self.lib.desmume_set_num_cores.restype = None
+        self.lib.desmume_set_num_cores.argtypes = [c_int]
+
 
         if self.lib.desmume_init() < 0:
             raise RuntimeError("Failed to init DeSmuME")
@@ -1270,3 +1273,6 @@ class DeSmuME:
         Only works if the library was compiled with -Denable_jit=true.
         """
         self.lib.desmume_set_jit_enabled(int(enabled), block_size)
+
+    def set_num_cores(self, n: int):
+        self.lib.desmume_set_num_cores(n)
