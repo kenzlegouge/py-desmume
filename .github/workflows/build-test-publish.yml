@@ -88,6 +88,7 @@ jobs:
         env:
           CIBW_BUILD_FRONTEND: build
           CIBW_SKIP: "*musllinux*"
+          CIBW_BEFORE_ALL_LINUX: "rm -rf build/ && {package}/build-manylinux.sh"
           CIBW_BEFORE_ALL_LINUX: "{package}/build-manylinux.sh"
           CIBW_BEFORE_BUILD_WINDOWS: "rm -rf desmume_src/desmume/src/frontend/interface/windows/__bins"
           CIBW_ENVIRONMENT_LINUX: 'CXXFLAGS="-DFORCE_AVX512_0=1 -D_GNU_SOURCE -DHAVE_LIBZ" CFLAGS="-D_GNU_SOURCE -DHAVE_LIBZ" LDFLAGS="-lz"'
