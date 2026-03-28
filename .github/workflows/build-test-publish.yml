@@ -148,6 +148,14 @@ jobs:
         shell: msys2 {0}
         run: |
           perl -i -pe "s/__version__\s*=\s*'(.*?)(\.rc.*|\.a.*|\.post.*)?'/__version__='\1.dev0+${GITHUB_SHA::8}'/" setup.py
+      - name: Patch setup.py for Linux zlib support
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          # Inject HAVE_LIBZ into define_macros if it exists, or append it
+          sed -i "s/define_macros=\[/define_macros=[('HAVE_LIBZ', '1'), /g" setup.py          
+          # Inject 'z' into libraries to enforce -lz linking
+          sed -i "s/libraries=\[/libraries=['z', /g" setup.py
       - name: Note version and add VS to path
         shell: msys2 {0}
         run: |
